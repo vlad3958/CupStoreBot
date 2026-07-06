@@ -9,56 +9,77 @@ function App() {
   const [cupSize, setCupSize] = useState("");
   const [cupType, setCupType] = useState("");
 
-  useEffect(() => {
-
-    const login = async () => {
-
-      if (!window.Telegram?.WebApp) {
-        console.log("Приложение открыто не в Telegram");
-        return;
-      }
-
-      const telegram = window.Telegram.WebApp;
-
-      telegram.ready();
-
-      setTg(telegram);
-
-      console.log(telegram.initDataUnsafe);
-
-     const response = await fetch("https://cupstoreserver.onrender.com/api/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          initData: telegram.initData,
-        }),
-      });
-
+ const showError = async (response) => {
+    try {
       const data = await response.json();
 
-      console.group("Ответ сервера");
-      console.log("Status:", response.status);
-      console.log("StatusText:", response.statusText);
-      console.log("Body:", data);
-      console.groupEnd();
+      alert(
+        `Ошибка!\n\n` +
+        `Статус: ${response.status}\n` +
+        `Сообщение: ${data.message || "Нет сообщения"}`
+      );
 
-      if (!response.ok) {
-        alert(data.message || "Ошибка авторизации");
-        return;
-      }
+      console.error(data);
+    } catch {
+      alert(
+        `Ошибка!\n\n` +
+        `Статус: ${response.status}\n` +
+        `Не удалось прочитать ответ сервера`
+      );
+    }
+  };
 
-    };
+  useEffect(() => {
 
-    login();
+   
+   const login = async () => {
+  if (!window.Telegram?.WebApp) {
+    alert("Приложение открыто не в Telegram");
+    return;
+  }
 
+  const telegram = window.Telegram.WebApp;
+
+  telegram.ready();
+
+  setTg(telegram);
+
+  console.log("Данные пользователя:", telegram.initDataUnsafe);
+
+  try {
+    const response = await fetch("https://cupstoreserver.onrender.com/api/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        initData: telegram.initData,
+      }),
+    });
+
+    if (!response.ok) {
+      await showError(response);
+      return;
+    }
+
+    const data = await response.json();
+
+    console.log(data);
+
+    alert("Авторизация успешна!");
+  } catch (error) {
+    alert(error instanceof Error ? error.message : "Неизвестная ошибка");
+    console.error(error);
+  }
+};
+login();
   }, []);
 
   const saveProduction = async () => {
 
     if (!tg) return;
 
+    try {
    const response = await fetch("https://cupstoreserver.onrender.com/api/production", {
       method: "POST",
       headers: {
@@ -73,21 +94,18 @@ function App() {
       }),
     });
 
-    const data = await response.json();
-
-    console.group("Ответ сервера");
-    console.log("Status:", response.status);
-    console.log("StatusText:", response.statusText);
-    console.log("Body:", data);
-    console.groupEnd();
-
-    if (!response.ok) {
-      alert(data.message || "Ошибка сохранения");
-      return;
+   if (!response.ok) {
+    await showError(response);
+    return;
     }
 
-    alert(data.message || "Данные успешно сохранены");
+  const data = await response.json();
 
+  alert(data.message || "Данные успешно сохранены");
+    } catch (error) {
+  alert(error instanceof Error ? error.message : "Неизвестная ошибка");
+  console.error(error);
+}
   };
 
   return (
