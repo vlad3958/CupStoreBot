@@ -31,7 +31,6 @@ function App() {
 
   useEffect(() => {
 
-   
    const login = async () => {
   if (!window.Telegram?.WebApp) {
     alert("Приложение открыто не в Telegram");
