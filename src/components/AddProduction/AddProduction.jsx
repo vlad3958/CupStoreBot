@@ -16,22 +16,22 @@ function AddProduction({
   const saveProduction = async () => {
 
     if (!tg) {
-      alert("Telegram не инициализирован");
+      alert("Telegram не ініціалізовано");
       return;
     }
 
     if (!cupsCount || Number(cupsCount) <= 0) {
-      alert("Введите количество стаканов");
+      alert("Введіть кількість стаканів");
       return;
     }
 
     if (!cupSize.trim()) {
-      alert("Введите размер стакана");
+      alert("Введіть розмір");
       return;
     }
 
-    if (!cupType.trim()) {
-      alert("Введите тип стакана");
+    if (!cupType) {
+      alert("Оберіть тип");
       return;
     }
 
@@ -46,7 +46,7 @@ function AddProduction({
         cupType
       );
 
-      alert(data.message || "Продукция успешно добавлена");
+      alert(data.message || "Продукцію успішно додано");
 
       setScreen("production");
 
@@ -66,38 +66,38 @@ function AddProduction({
 
     <div className="add-production">
 
-      <h2>Добавить продукцию</h2>
+      <h2>Додати продукцію</h2>
 
       <input
         type="number"
-        placeholder="Количество стаканов"
+        placeholder="Кількість стаканів"
         value={cupsCount}
         onChange={(e) => setCupsCount(e.target.value)}
       />
 
       <input
         type="text"
-        placeholder="Размер стакана"
+        placeholder="Розмір стакану"
         value={cupSize}
         onChange={(e) => setCupSize(e.target.value)}
       />
 
-        <select
+      <select
         value={cupType}
         onChange={(e) => setCupType(e.target.value)}
       >
-        <option value="">Выберите тип стакана</option>
-        <option value="single">Однослойный</option>
-        <option value="double">Двухслойный</option>
+        <option value="">Оберіть тип стакану</option>
+        <option value="single">Одношаровий</option>
+        <option value="double">Двошаровий</option>
       </select>
 
       <div className="buttons">
   <button onClick={saveProduction}>
-    ✅ Сохранить
+    ✅ Зберегти
   </button>
 
   <button onClick={() => setScreen("production")}>
-    ← Отмена
+    ← Скасувати
   </button>
 </div>
 

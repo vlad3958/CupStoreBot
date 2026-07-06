@@ -8,17 +8,20 @@ function Home({
   return (
     <div className="home">
 
-      <h1>Factory Mini App</h1>
+      <h1>Виробничий застосунок</h1>
       <h2>
-          Привет, {user?.first_name} 👋
+          Привіт, {user?.first_name || "Користувач"} 👋
       </h2>
 
       <button
         onClick={() => setScreen("production")}
       >
-        📦 Продукция
+        📦 Продукція
       </button>
 
+      <button onClick={() => tg.close()}>
+          Закрити застосунок
+      </button>
     </div>
   );
 }

@@ -140,14 +140,6 @@
     line-height:1;
 }
 
-.calendar-cell .day-earned{
-    font-size:9px;
-    line-height:1;
-    margin-top:2px;
-    color:#229ED9;
-    font-weight:700;
-}
-
 .calendar-cell.has-data{
     background:#e8f6fd;
 }
@@ -158,10 +150,6 @@
 
 .calendar-cell.selected{
     background:#229ED9;
-    color:white;
-}
-
-.calendar-cell.selected .day-earned{
     color:white;
 }
 

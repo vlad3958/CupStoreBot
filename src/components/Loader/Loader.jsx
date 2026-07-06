@@ -8,7 +8,7 @@ function Loader() {
 
         <div className="spinner"></div>
 
-        <p>Загрузка...</p>
+        <p>Завантаження...</p>
 
       </div>
 

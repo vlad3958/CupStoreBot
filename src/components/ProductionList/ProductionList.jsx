@@ -3,11 +3,11 @@ import { getProductions, updateProduction } from "../../services/api.js";
 import "./ProductionList.css";
 
 const PRICES = {
-  single: 5,  // копеек за однослойный стакан
-  double: 10, // копеек за двухслойный стакан
+  single: 5,  // копійок за одношарову склянку
+  double: 10, // копійок за двошарову склянку
 };
 
-const WEEKDAYS = ["Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Вс"];
+const WEEKDAYS = ["Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Нд"];
 
 function dateKey(d) {
   const dt = new Date(d);
@@ -21,12 +21,19 @@ function buildMonthGrid(monthDate) {
   const month = monthDate.getMonth();
   const firstDay = new Date(year, month, 1);
   const daysInMonth = new Date(year, month + 1, 0).getDate();
-  const leadingBlanks = (firstDay.getDay() + 6) % 7; // Monday-first week
+  const leadingBlanks = (firstDay.getDay() + 6) % 7; // тиждень з понеділка
 
   const cells = [];
   for (let i = 0; i < leadingBlanks; i++) cells.push(null);
   for (let d = 1; d <= daysInMonth; d++) cells.push(new Date(year, month, d));
   return cells;
+}
+
+function formatMoney(kopecks) {
+  return `${(kopecks / 100).toLocaleString("uk-UA", {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  })} грн`;
 }
 
 function ProductionList({
@@ -77,9 +84,9 @@ function ProductionList({
   };
 
   const cupLabel = (item) =>
-    item.cupType === "double" ? "Двухслойный" : "Однослойный";
+    item.cupType === "double" ? "Двошаровий" : "Одношаровий";
 
-  // группируем всю продукцию по дню: { "2026-07-06": { items: [...], earned: 120 } }
+  // групуємо всю продукцію по днях: { "2026-07-06": { items: [...], earned: 120 } }
   const byDay = useMemo(() => {
     const map = {};
     for (const item of productions) {
@@ -115,7 +122,7 @@ function ProductionList({
   };
 
   const monthLabel = currentMonth
-    .toLocaleString("ru-RU", { month: "long", year: "numeric" })
+    .toLocaleString("uk-UA", { month: "long", year: "numeric" })
     .replace(/^./, (c) => c.toUpperCase());
 
   const todayKey = dateKey(new Date());
@@ -139,17 +146,17 @@ function ProductionList({
     if (!tg) return;
 
     if (!editForm.cupsCount || Number(editForm.cupsCount) <= 0) {
-      alert("Введите количество стаканов");
+      alert("Введіть кількість стаканів");
       return;
     }
 
     if (!editForm.cupSize.trim()) {
-      alert("Введите размер стакана");
+      alert("Введіть розмір");
       return;
     }
 
     if (!editForm.cupType) {
-      alert("Выберите тип стакана");
+      alert("Оберіть тип");
       return;
     }
 
@@ -175,7 +182,7 @@ function ProductionList({
 
   return (
     <div className="production-list">
-      <h2>Продукция</h2>
+      <h2>Продукція</h2>
 
       <div className="production-buttons">
         <button onClick={() => setScreen("home")}>
@@ -183,7 +190,7 @@ function ProductionList({
         </button>
 
         <button onClick={() => setScreen("add")}>
-          Добавить
+          Додати
         </button>
       </div>
 
@@ -191,12 +198,12 @@ function ProductionList({
 
       {productions.length === 0 ? (
         <p className="empty">
-          📦 Пока нет записей
+          📦 Поки немає записів
         </p>
       ) : (
         <>
           <p className="total-earned">
-            <b>Всего заработано:</b> {totalEarned} коп.
+            <b>Всього зароблено:</b> {formatMoney(totalEarned)}
           </p>
 
           <div className="calendar">
@@ -235,16 +242,13 @@ function ProductionList({
                     onClick={() => setSelectedDay(key)}
                   >
                     <span className="day-number">{day.getDate()}</span>
-                    {dayData && (
-                      <span className="day-earned">{dayData.earned}</span>
-                    )}
                   </button>
                 );
               })}
             </div>
 
             <p className="month-total">
-              <b>Итого за месяц:</b> {monthEarned} коп.
+              <b>Разом за місяць:</b> {formatMoney(monthEarned)}
             </p>
           </div>
 
@@ -253,16 +257,16 @@ function ProductionList({
               <>
                 <div className="day-details-header">
                   <span>
-                    {selectedDateObj.toLocaleDateString("ru-RU", {
+                    {selectedDateObj.toLocaleDateString("uk-UA", {
                       day: "numeric",
                       month: "long",
                     })}
                   </span>
-                  <button className="today-btn" onClick={goToday}>Сегодня</button>
+                  <button className="today-btn" onClick={goToday}>Сьогодні</button>
                 </div>
 
                 {!selectedDayData ? (
-                  <p className="empty small">Записей за этот день нет</p>
+                  <p className="empty small">Записів за цей день немає</p>
                 ) : (
                   <>
                     {selectedDayData.items.map((item) => (
@@ -271,7 +275,7 @@ function ProductionList({
                           <>
                             <input
                               type="number"
-                              placeholder="Количество стаканов"
+                              placeholder="Кількість склянок"
                               value={editForm.cupsCount}
                               onChange={(e) =>
                                 setEditForm({ ...editForm, cupsCount: e.target.value })
@@ -280,7 +284,7 @@ function ProductionList({
 
                             <input
                               type="text"
-                              placeholder="Размер стакана"
+                              placeholder="Розмір склянки"
                               value={editForm.cupSize}
                               onChange={(e) =>
                                 setEditForm({ ...editForm, cupSize: e.target.value })
@@ -293,37 +297,37 @@ function ProductionList({
                                 setEditForm({ ...editForm, cupType: e.target.value })
                               }
                             >
-                              <option value="">Выберите тип стакана</option>
-                              <option value="single">Однослойный</option>
-                              <option value="double">Двухслойный</option>
+                              <option value="">Оберіть тип стакану</option>
+                              <option value="single">Одношаровий</option>
+                              <option value="double">Двошаровий</option>
                             </select>
 
                             <div className="edit-buttons">
                               <button onClick={() => saveEdit(item._id)}>
-                                ✅ Сохранить
+                                ✅ Зберегти
                               </button>
                               <button onClick={cancelEdit}>
-                                ✖ Отмена
+                                ✖ Скасувати
                               </button>
                             </div>
                           </>
                         ) : (
                           <>
                             <p>
-                              <b>Количество:</b> {item.cupsCount}
+                              <b>Кількість:</b> {item.cupsCount}
                             </p>
                             <p>
-                              <b>Размер:</b> {item.cupSize}
+                              <b>Розмір:</b> {item.cupSize}
                             </p>
                             <p>
                               <b>Тип:</b> {cupLabel(item)}
                             </p>
                             <p>
-                              <b>Заработано:</b> {calcEarned(item)} коп.
+                              <b>Зароблено:</b> {formatMoney(calcEarned(item))}
                             </p>
                             <p>
-                              <b>Время:</b>{" "}
-                              {new Date(item.date).toLocaleTimeString("ru-RU", {
+                              <b>Час:</b>{" "}
+                              {new Date(item.date).toLocaleTimeString("uk-UA", {
                                 hour: "2-digit",
                                 minute: "2-digit",
                               })}
@@ -333,14 +337,14 @@ function ProductionList({
                               className="edit-btn"
                               onClick={() => startEdit(item)}
                             >
-                              ✏️ Редактировать
+                              ✏️ Редагувати
                             </button>
                           </>
                         )}
                       </div>
                     ))}
                     <p className="day-total">
-                      <b>Итого за день:</b> {selectedDayData.earned} коп.
+                      <b>Разом за день:</b> {formatMoney(selectedDayData.earned)}
                     </p>
                   </>
                 )}

@@ -22,19 +22,19 @@ function App() {
       const data = await response.json();
 
       alert(
-        `Ошибка\n\n` +
+        `Помилка\n\n` +
           `Статус: ${response.status}\n` +
-          `${data.message || "Неизвестная ошибка"}`
+          `${data.message || "Невідома помилка"}`
       );
     } catch {
-      alert("Ошибка сервера");
+      alert("Помилка сервера");
     }
   };
 
   useEffect(() => {
     const login = async () => {
       if (!window.Telegram?.WebApp) {
-        alert("Открой приложение через Telegram");
+        alert("Відкрий застосунок через Telegram");
         return;
       }
 
