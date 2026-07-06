@@ -16,6 +16,12 @@ function dateKey(d) {
   ).padStart(2, "0")}`;
 }
 
+function toDateInputValue(date) {
+  const d = new Date(date);
+  const pad = (n) => String(n).padStart(2, "0");
+  return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
+}
+
 function buildMonthGrid(monthDate) {
   const year = monthDate.getFullYear();
   const month = monthDate.getMonth();
@@ -54,6 +60,7 @@ function ProductionList({
     cupsCount: "",
     cupSize: "",
     cupType: "",
+    date: "",
   });
 
   useEffect(() => {
@@ -129,12 +136,13 @@ function ProductionList({
   const selectedDayData = selectedDay ? byDay[selectedDay] : null;
   const selectedDateObj = selectedDay ? new Date(selectedDay) : null;
 
-  const startEdit = (item) => {
+const startEdit = (item) => {
     setEditingId(item._id);
     setEditForm({
       cupsCount: String(item.cupsCount),
       cupSize: item.cupSize,
       cupType: item.cupType,
+      date: toDateInputValue(item.date),
     });
   };
 
@@ -146,19 +154,27 @@ function ProductionList({
     if (!tg) return;
 
     if (!editForm.cupsCount || Number(editForm.cupsCount) <= 0) {
-      alert("Введіть кількість стаканів");
+      alert("Введіть кількість склянок");
       return;
     }
 
     if (!editForm.cupSize.trim()) {
-      alert("Введіть розмір");
+      alert("Введіть розмір склянки");
       return;
     }
 
     if (!editForm.cupType) {
-      alert("Оберіть тип");
+      alert("Оберіть тип склянки");
       return;
     }
+
+    if (!editForm.date) {
+      alert("Оберіть дату");
+      return;
+    }
+
+    const [year, month, day] = editForm.date.split("-").map(Number);
+    const dateValue = new Date(year, month - 1, day);
 
     try {
       setLoading(true);
@@ -168,7 +184,8 @@ function ProductionList({
         id,
         Number(editForm.cupsCount),
         editForm.cupSize,
-        editForm.cupType
+        editForm.cupType,
+        dateValue
       );
 
       setEditingId(null);
@@ -302,6 +319,14 @@ function ProductionList({
                               <option value="double">Двошаровий</option>
                             </select>
 
+                            <input
+                              type="date"
+                              value={editForm.date}
+                              onChange={(e) =>
+                                setEditForm({ ...editForm, date: e.target.value })
+                              }
+                            />
+
                             <div className="edit-buttons">
                               <button onClick={() => saveEdit(item._id)}>
                                 ✅ Зберегти
@@ -325,14 +350,7 @@ function ProductionList({
                             <p>
                               <b>Зароблено:</b> {formatMoney(calcEarned(item))}
                             </p>
-                            <p>
-                              <b>Час:</b>{" "}
-                              {new Date(item.date).toLocaleTimeString("uk-UA", {
-                                hour: "2-digit",
-                                minute: "2-digit",
-                              })}
-                            </p>
-
+                            
                             <button
                               className="edit-btn"
                               onClick={() => startEdit(item)}

@@ -71,7 +71,8 @@ export async function updateProduction(
     id,
     cupsCount,
     cupSize,
-    cupType
+    cupType,
+    date
 ) {
 
     const response = await fetch(`${API_URL}/api/production/${id}`, {
@@ -84,6 +85,7 @@ export async function updateProduction(
             cupsCount,
             cupSize,
             cupType,
+            date,
         }),
     });
 
