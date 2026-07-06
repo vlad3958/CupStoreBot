@@ -1,0 +1,47 @@
+.production-list{
+    display:flex;
+    flex-direction:column;
+}
+
+.production-card{
+
+    background:white;
+
+    border-radius:12px;
+
+    padding:15px;
+
+    margin-bottom:15px;
+
+    box-shadow:0 3px 10px rgba(0,0,0,.08);
+
+}
+
+.production-card p{
+
+    margin:8px 0;
+
+}
+
+.production-buttons{
+
+    display:flex;
+
+    gap:10px;
+
+    margin-bottom:20px;
+
+}
+
+.production-buttons button{
+
+    margin-top:0;
+
+}
+
+.empty{
+    text-align:center;
+    font-size:18px;
+    color:#666;
+    margin-top:20px;
+}
