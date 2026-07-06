@@ -55,7 +55,7 @@
 .calendar{
     background:white;
     border-radius:12px;
-    padding:12px;
+    padding: clamp(10px, 3vw, 18px) clamp(4px, 2vw, 10px);
     box-shadow:0 3px 10px rgba(0,0,0,.08);
     margin-bottom:15px;
 }
@@ -68,19 +68,19 @@
 }
 
 .calendar-month{
-    font-size:16px;
+    font-size: clamp(14px, 3.8vw, 18px);
     font-weight:600;
     color:#222;
     text-transform:capitalize;
 }
 
 .nav-btn{
-    width:36px;
-    height:36px;
+    width: clamp(32px, 9vw, 40px);
+    height: clamp(32px, 9vw, 40px);
     padding:0;
     margin:0;
     border-radius:8px;
-    font-size:20px;
+    font-size: clamp(18px, 5vw, 22px);
     line-height:1;
     background:#f4f6f9;
     color:#229ED9;
@@ -106,7 +106,7 @@
 .calendar-grid{
     display:grid;
     grid-template-columns:repeat(7,1fr);
-    gap:4px;
+    gap: clamp(3px, 1.2vw, 8px);
 }
 
 .calendar-cell{
@@ -125,7 +125,7 @@
     border:1px solid transparent;
     background:#f4f6f9;
     color:#333;
-    font-size:13px;
+    font-size: clamp(12px, 3.2vw, 16px);
     cursor:pointer;
 }
 
@@ -203,8 +203,9 @@
 
 .edit-buttons{
     display:flex;
-    gap:10px;
-    margin-top:5px;
+    flex-direction:column;
+    gap:8px;
+    margin-top:10px;
 }
 
 .edit-buttons button{
@@ -218,4 +219,20 @@
 
 .delete-btn:hover{
     background:#c94444;
+}
+
+.production-card select{
+    width:100%;
+    box-sizing:border-box;
+    padding:14px;
+    border:1px solid #ddd;
+    border-radius:10px;
+    margin-bottom:15px;
+    font-size:16px;
+    background:white;
+}
+
+.production-card select:focus{
+    outline:none;
+    border-color:#229ED9;
 }

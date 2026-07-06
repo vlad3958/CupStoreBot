@@ -31,3 +31,19 @@ select{
 
     font-size:16px;
 }
+
+.add-production select{
+    width:100%;
+    box-sizing:border-box;
+    padding:14px;
+    border:1px solid #ddd;
+    border-radius:10px;
+    margin-bottom:15px;
+    font-size:16px;
+    background:white;
+}
+
+.add-production select:focus{
+    outline:none;
+    border-color:#229ED9;
+}
