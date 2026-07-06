@@ -15,7 +15,7 @@ function App() {
 
       if (!window.Telegram?.WebApp) {
         console.log("Приложение открыто не в Telegram");
-       
+        return;
       }
 
       const telegram = window.Telegram.WebApp;
@@ -57,7 +57,7 @@ function App() {
 
   const saveProduction = async () => {
 
-   // if (!tg) return;
+    if (!tg) return;
 
    const response = await fetch("https://cupstoreserver.onrender.com/api/production", {
       method: "POST",
