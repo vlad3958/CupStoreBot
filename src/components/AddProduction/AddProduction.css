@@ -41,6 +41,8 @@ select{
     margin-bottom:15px;
     font-size:16px;
     background:white;
+    color:#222;
+    color-scheme: light;
 }
 
 .add-production select:focus{

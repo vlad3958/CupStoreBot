@@ -230,6 +230,8 @@
     margin-bottom:15px;
     font-size:16px;
     background:white;
+    color:#222;
+    color-scheme: light;
 }
 
 .production-card select:focus{

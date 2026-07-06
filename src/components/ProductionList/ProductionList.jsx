@@ -313,7 +313,7 @@ const startEdit = (item) => {
                           <>
                             <input
                               type="number"
-                              placeholder="Кількість склянок"
+                              placeholder="Кількість стаканів"
                               value={editForm.cupsCount}
                               onChange={(e) =>
                                 setEditForm({ ...editForm, cupsCount: e.target.value })
@@ -322,7 +322,7 @@ const startEdit = (item) => {
 
                             <input
                               type="text"
-                              placeholder="Розмір склянки"
+                              placeholder="Розмір стакану"
                               value={editForm.cupSize}
                               onChange={(e) =>
                                 setEditForm({ ...editForm, cupSize: e.target.value })
