@@ -10,7 +10,7 @@ function Home({
 
       <h1>Factory Mini App</h1>
       <h2>
-          Привет, {user?.first_name || "Пользователь"} 👋
+          Привет, {user?.first_name} 👋
       </h2>
 
       <button
@@ -19,9 +19,6 @@ function Home({
         📦 Продукция
       </button>
 
-      <button onClick={() => tg.close()}>
-          Закрыть приложение
-      </button>
     </div>
   );
 }

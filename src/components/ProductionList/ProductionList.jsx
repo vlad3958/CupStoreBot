@@ -2,6 +2,11 @@ import { useEffect, useState } from "react";
 import { getProductions } from "../../services/api.js";
 import "./ProductionList.css";
 
+const PRICES = {
+  single: 5,  // копеек за однослойный стакан
+  double: 10, // копеек за двухслойный стакан
+};
+
 function ProductionList({
   tg,
   setScreen,
@@ -32,6 +37,16 @@ function ProductionList({
     }
   };
 
+  const calcEarned = (item) => {
+    const price = PRICES[item.cupType] || 0;
+    return (price/100) * item.cupsCount;
+  };
+
+  const totalEarned = productions.reduce(
+    (sum, item) => sum + calcEarned(item),
+    0
+  );
+
   return (
     <div className="production-list">
       <h2>Продукция</h2>
@@ -53,28 +68,38 @@ function ProductionList({
   📦 Пока нет записей
 </p>
       ) : (
-        productions.map((item) => (
-          <div className="production-card"
-            key={item._id}
-          >
-            <p>
-              <b>Количество:</b> {item.cupsCount}
-            </p>
+       <>
+          <p className="total-earned">
+            <b>Всего заработано:</b> {totalEarned} грн.
+          </p>
 
-            <p>
-              <b>Размер:</b> {item.cupSize}
-            </p>
+          {productions.map((item) => (
+            <div className="production-card"
+              key={item._id}
+            >
+              <p>
+                <b>Количество:</b> {item.cupsCount}
+              </p>
 
-            <p>
-              <b>Тип:</b> {item.cupType}
-            </p>
+              <p>
+                <b>Размер:</b> {item.cupSize}
+              </p>
 
-            <p>
-              <b>Дата:</b>{" "}
-              {new Date(item.date).toLocaleString("uk-UA")}
-            </p>
-          </div>
-        ))
+              <p>
+                <b>Тип:</b> {item.cupType === "double" ? "Двухслойный" : "Однослойный"}
+              </p>
+
+              <p>
+                <b>Заработано:</b> {calcEarned(item)} коп.
+              </p>
+
+              <p>
+                <b>Дата:</b>{" "}
+                {new Date(item.date).toLocaleString("uk-UA")}
+              </p>
+            </div>
+          ))}
+        </>
       )}
     </div>
   );

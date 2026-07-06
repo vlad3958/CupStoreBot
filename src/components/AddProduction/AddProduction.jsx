@@ -82,12 +82,14 @@ function AddProduction({
         onChange={(e) => setCupSize(e.target.value)}
       />
 
-      <input
-        type="text"
-        placeholder="Тип стакана"
+        <select
         value={cupType}
         onChange={(e) => setCupType(e.target.value)}
-      />
+      >
+        <option value="">Выберите тип стакана</option>
+        <option value="single">Однослойный</option>
+        <option value="double">Двухслойный</option>
+      </select>
 
       <div className="buttons">
   <button onClick={saveProduction}>
