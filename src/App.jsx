@@ -28,7 +28,7 @@ function App() {
 
       try {
 
-        const response = await fetch("http://localhost:3000/api/login", {
+        const response = await fetch("https://cupstoreserver.onrender.com/api/login", {
 
           method: "POST",
 
@@ -64,7 +64,7 @@ function App() {
 
     try {
 
-      const response = await fetch("http://localhost:3000/api/production", {
+      const response = await fetch("https://cupstoreserver.onrender.com/api/production", {
 
         method: "POST",
 
