@@ -26,30 +26,27 @@ function App() {
 
       console.log(telegram.initDataUnsafe);
 
-      try {
+     const response = await fetch("https://cupstoreserver.onrender.com/api/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          initData: telegram.initData,
+        }),
+      });
 
-        const response = await fetch("https://cupstoreserver.onrender.com/api/login", {
+      const data = await response.json();
 
-          method: "POST",
+      console.group("Ответ сервера");
+      console.log("Status:", response.status);
+      console.log("StatusText:", response.statusText);
+      console.log("Body:", data);
+      console.groupEnd();
 
-          headers: {
-            "Content-Type": "application/json",
-          },
-
-          body: JSON.stringify({
-            initData: telegram.initData,
-          }),
-
-        });
-
-        const data = await response.json();
-
-        console.log(data);
-
-      } catch (error) {
-
-        console.error(error);
-
+      if (!response.ok) {
+        alert(data.message || "Ошибка авторизации");
+        return;
       }
 
     };
@@ -62,41 +59,34 @@ function App() {
 
     if (!tg) return;
 
-    try {
+   const response = await fetch("https://cupstoreserver.onrender.com/api/production", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        initData: tg.initData,
+        cupsCount: Number(cupsCount),
+        cupSize,
+        cupType,
+        date: new Date(),
+      }),
+    });
 
-      const response = await fetch("https://cupstoreserver.onrender.com/api/production", {
+    const data = await response.json();
 
-        method: "POST",
+    console.group("Ответ сервера");
+    console.log("Status:", response.status);
+    console.log("StatusText:", response.statusText);
+    console.log("Body:", data);
+    console.groupEnd();
 
-        headers: {
-          "Content-Type": "application/json",
-        },
-
-        body: JSON.stringify({
-
-          initData: tg.initData,
-
-          cupsCount: Number(cupsCount),
-
-          cupSize,
-
-          cupType,
-
-          date: new Date()
-
-        }),
-
-      });
-
-      const data = await response.json();
-
-      alert(data.message);
-
-    } catch (err) {
-
-      console.error(err);
-
+    if (!response.ok) {
+      alert(data.message || "Ошибка сохранения");
+      return;
     }
+
+    alert(data.message || "Данные успешно сохранены");
 
   };
 
