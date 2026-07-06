@@ -90,7 +90,7 @@ function ProductionList({
               </p>
 
               <p>
-                <b>Заработано:</b> {calcEarned(item)} коп.
+                <b>Заработано:</b> {calcEarned(item)} грн.
               </p>
 
               <p>

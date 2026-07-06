@@ -1,33 +1,33 @@
 .add-production{
-
     display:flex;
-
     flex-direction:column;
-
 }
 
 .add-production h2{
-
     margin-bottom:20px;
-
 }
 
 .add-production input{
-
     margin-bottom:15px;
-
 }
 
 .add-production button{
-
     margin-top:10px;
-
 }
 
 .buttons{
-
     display:flex;
-
     gap:10px;
+}
 
+select{
+    width:100%;
+    padding:14px;
+
+    border:1px solid #ddd;
+    border-radius:10px;
+
+    margin-bottom:15px;
+
+    font-size:16px;
 }
