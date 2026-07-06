@@ -95,3 +95,22 @@ export async function updateProduction(
 
     return await response.json();
 }
+
+export async function deleteProduction(initData, id) {
+
+    const response = await fetch(`${API_URL}/api/production/${id}`, {
+        method: "DELETE",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+            initData,
+        }),
+    });
+
+    if (!response.ok) {
+        throw response;
+    }
+
+    return await response.json();
+}

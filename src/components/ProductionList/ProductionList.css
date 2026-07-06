@@ -210,3 +210,12 @@
 .edit-buttons button{
     margin-top:0;
 }
+
+.delete-btn{
+    background:#e05555;
+    color:white;
+}
+
+.delete-btn:hover{
+    background:#c94444;
+}

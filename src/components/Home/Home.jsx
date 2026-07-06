@@ -18,10 +18,6 @@ function Home({
       >
         📦 Продукція
       </button>
-
-      <button onClick={() => tg.close()}>
-          Закрити застосунок
-      </button>
     </div>
   );
 }

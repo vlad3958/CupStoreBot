@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
-import { getProductions, updateProduction } from "../../services/api.js";
+import { getProductions, updateProduction, deleteProduction } from "../../services/api.js";
 import "./ProductionList.css";
 
 const PRICES = {
@@ -197,6 +197,27 @@ const startEdit = (item) => {
     }
   };
 
+  const handleDelete = async (id) => {
+    if (!tg) return;
+
+    const confirmed = window.confirm("Видалити цей запис? Дію не можна скасувати.");
+
+    if (!confirmed) return;
+
+    try {
+      setLoading(true);
+
+      await deleteProduction(tg.initData, id);
+
+      setEditingId(null);
+      await loadProductions();
+    } catch (response) {
+      await showError(response);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <div className="production-list">
       <h2>Продукція</h2>
@@ -334,6 +355,12 @@ const startEdit = (item) => {
                               <button onClick={cancelEdit}>
                                 ✖ Скасувати
                               </button>
+                              <button
+                                className="delete-btn"
+                                onClick={() => handleDelete(item._id)}
+                              >
+                                🗑 Видалити
+                              </button>
                             </div>
                           </>
                         ) : (
@@ -350,7 +377,7 @@ const startEdit = (item) => {
                             <p>
                               <b>Зароблено:</b> {formatMoney(calcEarned(item))}
                             </p>
-                            
+
                             <button
                               className="edit-btn"
                               onClick={() => startEdit(item)}
