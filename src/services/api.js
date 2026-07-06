@@ -65,3 +65,31 @@ export async function addProduction(
 
     return await response.json();
 }
+
+export async function updateProduction(
+    initData,
+    id,
+    cupsCount,
+    cupSize,
+    cupType
+) {
+
+    const response = await fetch(`${API_URL}/api/production/${id}`, {
+        method: "PUT",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+            initData,
+            cupsCount,
+            cupSize,
+            cupType,
+        }),
+    });
+
+    if (!response.ok) {
+        throw response;
+    }
+
+    return await response.json();
+}
