@@ -59,7 +59,7 @@ function App() {
 
     } catch (error) {
 
-      await showError(response);
+      await showError(error);
 
     } finally {
 

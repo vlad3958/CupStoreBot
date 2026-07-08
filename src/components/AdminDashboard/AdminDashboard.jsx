@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { getAdminOverview } from "../../services/api.js";
-import { calcEarned, cupLabel, formatMoney } from "../../utils/pricing.js";
+import { calcEarned, cupLabel, formatMoney } from "../../pricing.js";
 import "./AdminDashboard.css";
 
 function workerName(user) {
