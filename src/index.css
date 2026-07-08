@@ -6,8 +6,8 @@
   --sky: #8fd3ff;
   --coral: #ff6a4d;
 
-  --font-display: 'Archivo', 'Arial Narrow', sans-serif;
-  --font-body: 'Inter', system-ui, sans-serif;
+  --font-display: 'Unbounded', 'Arial Narrow', sans-serif;
+  --font-body: 'Manrope', system-ui, sans-serif;
 
   color-scheme: light;
 }
@@ -35,7 +35,7 @@ html, body {
 h1, h2, h3 {
     font-family: var(--font-display);
     font-weight: 800;
-    letter-spacing: -0.02em;
+    letter-spacing: -0.01em;
     text-transform: uppercase;
     color: var(--ink);
 }
