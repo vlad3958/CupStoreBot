@@ -3,6 +3,12 @@
     flex-direction: column;
 }
 
+.production-list h2 {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 18px;
+}
+
 .production-buttons {
     display: flex;
     gap: 10px;
