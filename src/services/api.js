@@ -114,3 +114,22 @@ export async function deleteProduction(initData, id) {
 
     return await response.json();
 }
+
+export async function getAdminOverview(initData) {
+
+    const response = await fetch(`${API_URL}/api/admin/overview`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+            initData,
+        }),
+    });
+
+    if (!response.ok) {
+        throw response;
+    }
+
+    return await response.json();
+}

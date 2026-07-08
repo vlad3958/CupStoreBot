@@ -4,6 +4,7 @@ import Home from "./components/Home/Home";
 import ProductionList from "./components/ProductionList/ProductionList";
 import AddProduction from "./components/AddProduction/AddProduction";
 import Loader from "./components/Loader/Loader";
+import AdminDashboard from "./components/AdminDashboard/AdminDashboard";
 
 import "./App.css";
 
@@ -11,9 +12,7 @@ function App() {
   const [tg, setTg] = useState(null);
   const [user, setUser] = useState(null);
   const [screen, setScreen] = useState("home");
-  // home
-  // production
-  // add
+  const [isAdmin, setIsAdmin] = useState(false);
 
   const [loading, setLoading] = useState(false);
 
@@ -52,6 +51,7 @@ function App() {
       const data = await loginApi(telegram.initData);
 
       setUser(data.user);
+      setIsAdmin(!!data.isAdmin);
 
 
       console.log(data.user);
@@ -81,6 +81,7 @@ function App() {
           user={user}
           setScreen={setScreen}
           tg={tg}
+          isAdmin={isAdmin}
          />
       )}
 
@@ -96,6 +97,15 @@ function App() {
 
       {screen === "add" && (
         <AddProduction
+          tg={tg}
+          setScreen={setScreen}
+          showError={showError}
+          setLoading={setLoading}
+        />
+      )}
+
+      {screen === "admin" && (
+        <AdminDashboard
           tg={tg}
           setScreen={setScreen}
           showError={showError}

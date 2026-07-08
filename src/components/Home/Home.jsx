@@ -4,6 +4,7 @@ function Home({
     user,
     tg,
     setScreen,
+    isAdmin,
 }) {
   return (
     <div className="home">
@@ -17,6 +18,16 @@ function Home({
         onClick={() => setScreen("production")}
       >
         📦 Продукція
+      </button>
+
+      {isAdmin && (
+        <button onClick={() => setScreen("admin")}>
+          🛠 Адмін-панель
+        </button>
+      )}
+
+      <button onClick={() => tg.close()}>
+          Закрити застосунок
       </button>
     </div>
   );

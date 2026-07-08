@@ -1,11 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { getProductions, updateProduction, deleteProduction } from "../../services/api.js";
+import { calcEarned, cupLabel, formatMoney } from "../../pricing.js";
 import "./ProductionList.css";
-
-const PRICES = {
-  single: 5,  // копійок за одношарову склянку
-  double: 10, // копійок за двошарову склянку
-};
 
 const WEEKDAYS = ["Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Нд"];
 
@@ -33,13 +29,6 @@ function buildMonthGrid(monthDate) {
   for (let i = 0; i < leadingBlanks; i++) cells.push(null);
   for (let d = 1; d <= daysInMonth; d++) cells.push(new Date(year, month, d));
   return cells;
-}
-
-function formatMoney(kopecks) {
-  return `${(kopecks / 100).toLocaleString("uk-UA", {
-    minimumFractionDigits: 2,
-    maximumFractionDigits: 2,
-  })} грн`;
 }
 
 function ProductionList({
@@ -84,14 +73,6 @@ function ProductionList({
       setLoading(false);
     }
   };
-
-  const calcEarned = (item) => {
-    const price = PRICES[item.cupType] || 0;
-    return price * item.cupsCount;
-  };
-
-  const cupLabel = (item) =>
-    item.cupType === "double" ? "Двошаровий" : "Одношаровий";
 
   // групуємо всю продукцію по днях: { "2026-07-06": { items: [...], earned: 120 } }
   const byDay = useMemo(() => {
