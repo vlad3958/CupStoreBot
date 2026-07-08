@@ -1,51 +1,40 @@
-.add-production{
-    display:flex;
-    flex-direction:column;
+.add-production {
+    display: flex;
+    flex-direction: column;
 }
 
-.add-production h2{
-    margin-bottom:20px;
+.add-production h2 {
+    margin-bottom: 20px;
 }
 
-.add-production input{
-    margin-bottom:15px;
+.add-production input {
+    margin-bottom: 15px;
 }
 
-.add-production button{
-    margin-top:10px;
+.add-production button {
+    margin-top: 10px;
 }
 
-.buttons{
-    display:flex;
-    gap:10px;
-}
-
-select{
-    width:100%;
-    padding:14px;
-
-    border:1px solid #ddd;
-    border-radius:10px;
-
-    margin-bottom:15px;
-
-    font-size:16px;
-}
-
-.add-production select{
-    width:100%;
-    box-sizing:border-box;
-    padding:14px;
-    border:1px solid #ddd;
-    border-radius:10px;
-    margin-bottom:15px;
-    font-size:16px;
-    background:white;
-    color:#222;
+.add-production select {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 14px;
+    border: 2px solid var(--ink);
+    border-radius: 8px;
+    margin-bottom: 15px;
+    font-size: 16px;
+    font-family: var(--font-body);
+    background: var(--paper);
+    color: var(--ink);
     color-scheme: light;
 }
 
-.add-production select:focus{
-    outline:none;
-    border-color:#229ED9;
+.add-production select:focus {
+    outline: none;
+    border-color: var(--sky);
+}
+
+.buttons {
+    display: flex;
+    gap: 10px;
 }

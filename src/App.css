@@ -1,99 +1,90 @@
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-    font-family: Arial, Helvetica, sans-serif;
-}
-
-body {
-    background: #f4f6f9;
-}
-
 .App {
     width: min(680px, 100%);
     margin-inline: auto;
     padding: clamp(14px, 4vw, 24px);
 }
 
-h1,
-h2 {
+h1, h2 {
     text-align: center;
     margin-bottom: 20px;
-    color: #222;
 }
 
 button {
     width: 100%;
     padding: 14px;
-
     margin-top: 10px;
 
-    border: none;
-    border-radius: 10px;
+    border: 2px solid var(--ink);
+    border-radius: 999px;
 
-    background: #229ED9;
-    color: white;
+    background: var(--paper);
+    color: var(--ink);
 
+    font-family: var(--font-body);
+    font-weight: 700;
     font-size: 16px;
     cursor: pointer;
 
-    transition: .2s;
+    transition: .15s;
 }
 
 button:hover {
-    background: #1b8bc2;
+    background: var(--ink);
+    color: var(--paper);
 }
 
 button:active {
     transform: scale(.98);
 }
 
+button:focus-visible {
+    outline: 3px solid var(--sky);
+    outline-offset: 2px;
+}
+
 input {
     width: 100%;
-
     padding: 14px;
 
-    border: 1px solid #ddd;
-    border-radius: 10px;
+    border: 2px solid var(--ink);
+    border-radius: 8px;
+    background: var(--paper);
+    color: var(--ink);
 
     margin-bottom: 15px;
 
+    font-family: var(--font-body);
     font-size: 16px;
 }
 
-
 input:focus {
     outline: none;
-    border-color: #229ED9;
+    border-color: var(--sky);
 }
 
 .card {
-    background: white;
-
-    border-radius: 12px;
-
+    background: var(--paper);
+    border: 2px solid var(--ink);
+    border-radius: 10px;
     padding: 16px;
-
     margin-bottom: 15px;
-
-    box-shadow: 0 3px 10px rgba(0,0,0,.08);
 }
 
-.card p{
-    margin:6px 0;
+.card p {
+    margin: 6px 0;
 }
 
-.row{
-    display:flex;
-    gap:10px;
+.row {
+    display: flex;
+    gap: 10px;
 }
 
-.row button{
-    margin-top:0;
+.row button {
+    margin-top: 0;
 }
 
-.empty{
-    text-align:center;
-    color:#777;
-    margin-top:40px;
+.empty {
+    text-align: center;
+    color: #666;
+    margin-top: 40px;
 }

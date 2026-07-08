@@ -25,10 +25,6 @@ function Home({
           🛠 Адмін-панель
         </button>
       )}
-
-      <button onClick={() => tg.close()}>
-          Закрити застосунок
-      </button>
     </div>
   );
 }
