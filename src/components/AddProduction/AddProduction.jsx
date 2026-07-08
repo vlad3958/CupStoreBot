@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { addProduction } from "../../services/api.js";
+import { dateKey } from "../../date.js";
 import "./AddProduction.css";
 
 function AddProduction({
@@ -7,11 +8,13 @@ function AddProduction({
   setScreen,
   showError,
   setLoading,
+  selectedDay,
 }) {
 
   const [cupsCount, setCupsCount] = useState("");
   const [cupSize, setCupSize] = useState("");
   const [cupType, setCupType] = useState("");
+  const [date, setDate] = useState(() => selectedDay || dateKey(new Date()));
 
   const saveProduction = async () => {
 
@@ -21,19 +24,27 @@ function AddProduction({
     }
 
     if (!cupsCount || Number(cupsCount) <= 0) {
-      alert("Введіть кількість стаканів");
+      alert("Введіть кількість склянок");
       return;
     }
 
     if (!cupSize.trim()) {
-      alert("Введіть розмір");
+      alert("Введіть розмір склянки");
       return;
     }
 
     if (!cupType) {
-      alert("Оберіть тип");
+      alert("Оберіть тип склянки");
       return;
     }
+
+    if (!date) {
+      alert("Оберіть дату");
+      return;
+    }
+
+    const [year, month, day] = date.split("-").map(Number);
+    const dateValue = new Date(year, month - 1, day);
 
     try {
 
@@ -43,7 +54,8 @@ function AddProduction({
         tg.initData,
         Number(cupsCount),
         cupSize,
-        cupType
+        cupType,
+        dateValue
       );
 
       alert(data.message || "Продукцію успішно додано");
@@ -70,14 +82,14 @@ function AddProduction({
 
       <input
         type="number"
-        placeholder="Кількість стаканів"
+        placeholder="Кількість склянок"
         value={cupsCount}
         onChange={(e) => setCupsCount(e.target.value)}
       />
 
       <input
         type="text"
-        placeholder="Розмір стакану"
+        placeholder="Розмір склянки"
         value={cupSize}
         onChange={(e) => setCupSize(e.target.value)}
       />
@@ -86,10 +98,16 @@ function AddProduction({
         value={cupType}
         onChange={(e) => setCupType(e.target.value)}
       >
-        <option value="">Оберіть тип стакану</option>
+        <option value="">Оберіть тип склянки</option>
         <option value="single">Одношаровий</option>
         <option value="double">Двошаровий</option>
       </select>
+
+      <input
+        type="date"
+        value={date}
+        onChange={(e) => setDate(e.target.value)}
+      />
 
       <div className="buttons">
   <button onClick={saveProduction}>

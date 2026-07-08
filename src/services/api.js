@@ -42,7 +42,8 @@ export async function addProduction(
     initData,
     cupsCount,
     cupSize,
-    cupType
+    cupType,
+    date
 ) {
 
     const response = await fetch(`${API_URL}/api/production`, {
@@ -55,7 +56,7 @@ export async function addProduction(
             cupsCount,
             cupSize,
             cupType,
-            date: new Date(),
+            date
         }),
     });
 

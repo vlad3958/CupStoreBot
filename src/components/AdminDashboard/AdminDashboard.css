@@ -15,14 +15,14 @@
 
 .total-earned {
     text-align: center;
-    font-family: var(--font-display);
-    font-weight: 800;
-    font-size: clamp(20px, 6vw, 26px);
-    text-transform: uppercase;
+    font-family: var(--font-body);
+    font-weight: 600;
+    font-size: 14px;
+    text-transform: none;
     background: var(--lime);
     border: 2px solid var(--ink);
-    border-radius: 10px;
-    padding: 16px;
+    border-radius: 8px;
+    padding: 10px 14px;
     margin-bottom: 15px;
 }
 

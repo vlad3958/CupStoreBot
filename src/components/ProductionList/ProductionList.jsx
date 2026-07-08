@@ -1,48 +1,24 @@
 import { useEffect, useMemo, useState } from "react";
 import { getProductions, updateProduction, deleteProduction } from "../../services/api.js";
 import { calcEarned, cupLabel, formatMoney } from "../../pricing.js";
+import { dateKey, buildMonthGrid } from "../../date.js";
 import "./ProductionList.css";
 
 const WEEKDAYS = ["Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Нд"];
-
-function dateKey(d) {
-  const dt = new Date(d);
-  return `${dt.getFullYear()}-${String(dt.getMonth() + 1).padStart(2, "0")}-${String(
-    dt.getDate()
-  ).padStart(2, "0")}`;
-}
-
-function toDateInputValue(date) {
-  const d = new Date(date);
-  const pad = (n) => String(n).padStart(2, "0");
-  return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
-}
-
-function buildMonthGrid(monthDate) {
-  const year = monthDate.getFullYear();
-  const month = monthDate.getMonth();
-  const firstDay = new Date(year, month, 1);
-  const daysInMonth = new Date(year, month + 1, 0).getDate();
-  const leadingBlanks = (firstDay.getDay() + 6) % 7; // тиждень з понеділка
-
-  const cells = [];
-  for (let i = 0; i < leadingBlanks; i++) cells.push(null);
-  for (let d = 1; d <= daysInMonth; d++) cells.push(new Date(year, month, d));
-  return cells;
-}
 
 function ProductionList({
   tg,
   setScreen,
   showError,
   setLoading,
+  selectedDay,
+  setSelectedDay,
 }) {
   const [productions, setProductions] = useState([]);
   const [currentMonth, setCurrentMonth] = useState(() => {
     const now = new Date();
     return new Date(now.getFullYear(), now.getMonth(), 1);
   });
-  const [selectedDay, setSelectedDay] = useState(() => dateKey(new Date()));
 
   const [editingId, setEditingId] = useState(null);
   const [editForm, setEditForm] = useState({
@@ -74,7 +50,6 @@ function ProductionList({
     }
   };
 
-  // групуємо всю продукцію по днях: { "2026-07-06": { items: [...], earned: 120 } }
   const byDay = useMemo(() => {
     const map = {};
     for (const item of productions) {
@@ -117,13 +92,13 @@ function ProductionList({
   const selectedDayData = selectedDay ? byDay[selectedDay] : null;
   const selectedDateObj = selectedDay ? new Date(selectedDay) : null;
 
-const startEdit = (item) => {
+  const startEdit = (item) => {
     setEditingId(item._id);
     setEditForm({
       cupsCount: String(item.cupsCount),
       cupSize: item.cupSize,
       cupType: item.cupType,
-      date: toDateInputValue(item.date),
+      date: dateKey(item.date),
     });
   };
 
@@ -245,7 +220,6 @@ const startEdit = (item) => {
                 }
 
                 const key = dateKey(day);
-                const dayData = byDay[key];
                 const isSelected = selectedDay === key;
                 const isToday = key === todayKey;
 
@@ -254,7 +228,6 @@ const startEdit = (item) => {
                     key={key}
                     className={
                       "calendar-cell" +
-                      (dayData ? " has-data" : "") +
                       (isSelected ? " selected" : "") +
                       (isToday ? " today" : "")
                     }
@@ -294,7 +267,7 @@ const startEdit = (item) => {
                           <>
                             <input
                               type="number"
-                              placeholder="Кількість стаканів"
+                              placeholder="Кількість склянок"
                               value={editForm.cupsCount}
                               onChange={(e) =>
                                 setEditForm({ ...editForm, cupsCount: e.target.value })
@@ -303,7 +276,7 @@ const startEdit = (item) => {
 
                             <input
                               type="text"
-                              placeholder="Розмір стакану"
+                              placeholder="Розмір склянки"
                               value={editForm.cupSize}
                               onChange={(e) =>
                                 setEditForm({ ...editForm, cupSize: e.target.value })
@@ -316,7 +289,7 @@ const startEdit = (item) => {
                                 setEditForm({ ...editForm, cupType: e.target.value })
                               }
                             >
-                              <option value="">Оберіть тип стакану</option>
+                              <option value="">Оберіть тип склянки</option>
                               <option value="single">Одношаровий</option>
                               <option value="double">Двошаровий</option>
                             </select>

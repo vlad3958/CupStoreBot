@@ -5,7 +5,7 @@ import ProductionList from "./components/ProductionList/ProductionList";
 import AddProduction from "./components/AddProduction/AddProduction";
 import Loader from "./components/Loader/Loader";
 import AdminDashboard from "./components/AdminDashboard/AdminDashboard";
-
+import { dateKey } from "./date.js";
 import "./App.css";
 
 function App() {
@@ -13,7 +13,7 @@ function App() {
   const [user, setUser] = useState(null);
   const [screen, setScreen] = useState("home");
   const [isAdmin, setIsAdmin] = useState(false);
-
+  const [selectedDay, setSelectedDay] = useState(() => dateKey(new Date()));
   const [loading, setLoading] = useState(false);
 
   const showError = async (response) => {
@@ -92,6 +92,8 @@ function App() {
           setScreen={setScreen}
           showError={showError}
           setLoading={setLoading}
+          selectedDay={selectedDay}
+          setSelectedDay={setSelectedDay}
         />
       )}
 
@@ -101,6 +103,7 @@ function App() {
           setScreen={setScreen}
           showError={showError}
           setLoading={setLoading}
+          selectedDay={selectedDay}
         />
       )}
 
