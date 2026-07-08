@@ -46,6 +46,11 @@
     margin-bottom: 15px;
 }
 
+.calendar-cell.has-data {
+    background: var(--sky);
+    border-color: var(--ink);
+}
+
 .calendar-nav {
     display: flex;
     align-items: center;

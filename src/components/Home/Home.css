@@ -6,12 +6,9 @@
 }
 
 .home h1 {
-    background: var(--lime);
-    border: 2px solid var(--ink);
-    border-radius: 10px;
-    padding: 24px 16px;
-    font-size: clamp(28px, 8vw, 40px);
-    line-height: 1.05;
+    font-size: 22px;
+    font-weight: 700;
+    line-height: 1.2;
     margin-bottom: 8px;
 }
 

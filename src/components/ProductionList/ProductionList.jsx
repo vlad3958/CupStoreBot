@@ -213,13 +213,14 @@ function ProductionList({
               ))}
             </div>
 
-            <div className="calendar-grid">
+           <div className="calendar-grid">
               {monthCells.map((day, i) => {
                 if (!day) {
                   return <div key={`blank-${i}`} className="calendar-cell blank" />;
                 }
 
                 const key = dateKey(day);
+                const dayData = byDay[key];
                 const isSelected = selectedDay === key;
                 const isToday = key === todayKey;
 
@@ -228,6 +229,7 @@ function ProductionList({
                     key={key}
                     className={
                       "calendar-cell" +
+                      (dayData ? " has-data" : "") +
                       (isSelected ? " selected" : "") +
                       (isToday ? " today" : "")
                     }
