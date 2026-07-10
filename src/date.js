@@ -13,6 +13,11 @@ function parseDateValue(value) {
       const [, day, month, year] = dmy;
       return new Date(Number(year), Number(month) - 1, Number(day));
     }
+    const dmyDots = value.match(/^(\d{2})\.(\d{2})\.(\d{4})$/);
+    if (dmyDots) {
+      const [, day, month, year] = dmyDots;
+      return new Date(Number(year), Number(month) - 1, Number(day));
+    }
   }
   return new Date(value);
 }
@@ -29,7 +34,7 @@ export function formatDateDdMmYyyy(d) {
 
 export function toApiDateDdMmYyyy(ymdDate) {
   const dt = parseDateValue(ymdDate);
-  return `${pad(dt.getDate())}/${pad(dt.getMonth() + 1)}/${dt.getFullYear()}`;
+  return `${dt.getFullYear()}-${pad(dt.getMonth() + 1)}-${pad(dt.getDate())}`;
 }
 
 export function buildMonthGrid(monthDate) {

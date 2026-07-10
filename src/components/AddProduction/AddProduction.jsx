@@ -10,6 +10,7 @@ function AddProduction({
   showError,
   setLoading,
   selectedDay,
+  setSelectedDay,
 }) {
 
   const [cupsCount, setCupsCount] = useState("");
@@ -60,6 +61,7 @@ function AddProduction({
 
       alert(data.message || "Продукцію успішно додано");
 
+      setSelectedDay(dateKey(date));
       setScreen("production");
 
     } catch (response) {
