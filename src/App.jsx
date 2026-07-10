@@ -104,6 +104,7 @@ function App() {
           showError={showError}
           setLoading={setLoading}
           selectedDay={selectedDay}
+          setSelectedDay={setSelectedDay}
         />
       )}
 
