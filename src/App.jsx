@@ -5,6 +5,7 @@ import ProductionList from "./components/ProductionList/ProductionList";
 import AddProduction from "./components/AddProduction/AddProduction";
 import Loader from "./components/Loader/Loader";
 import AdminDashboard from "./components/AdminDashboard/AdminDashboard";
+import AnalyticsDashboard from "./components/AnalyticsDashboard/AnalyticsDashboard";
 import { dateKey } from "./date.js";
 import "./App.css";
 
@@ -111,6 +112,16 @@ function App() {
       {screen === "admin" && (
         <AdminDashboard
           tg={tg}
+          setScreen={setScreen}
+          showError={showError}
+          setLoading={setLoading}
+        />
+      )}
+
+      {screen === "analytics" && (
+        <AnalyticsDashboard
+          tg={tg}
+          isAdmin={isAdmin}
           setScreen={setScreen}
           showError={showError}
           setLoading={setLoading}
