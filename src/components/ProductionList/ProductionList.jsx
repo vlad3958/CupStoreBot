@@ -1,7 +1,8 @@
 import { useEffect, useMemo, useState } from "react";
 import { getProductions, updateProduction, deleteProduction } from "../../services/api.js";
 import { calcEarned, cupLabel, formatMoney } from "../../pricing.js";
-import { dateKey, buildMonthGrid, formatDateDdMmYyyy } from "../../date.js";
+import { dateKey, buildMonthGrid, formatDateDdMmYyyy, toApiDateDdMmYyyy } from "../../date.js";
+import { CUP_SIZES } from "../../constants/cupSizes.js";
 import "./ProductionList.css";
 
 const WEEKDAYS = ["Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Нд"];
@@ -112,8 +113,8 @@ function ProductionList({
       return;
     }
 
-    if (!editForm.cupSize.trim()) {
-      alert("Введіть розмір стакана");
+    if (!editForm.cupSize) {
+      alert("Оберіть розмір стакана");
       return;
     }
 
@@ -127,8 +128,7 @@ function ProductionList({
       return;
     }
 
-    const [year, month, day] = editForm.date.split("-").map(Number);
-    const dateValue = new Date(year, month - 1, day);
+    const dateValue = toApiDateDdMmYyyy(editForm.date);
 
     try {
       setLoading(true);
@@ -267,14 +267,19 @@ function ProductionList({
                               }
                             />
 
-                            <input
-                              type="text"
-                              placeholder="Розмір стакана"
+                            <select
                               value={editForm.cupSize}
                               onChange={(e) =>
                                 setEditForm({ ...editForm, cupSize: e.target.value })
                               }
-                            />
+                            >
+                              <option value="">Оберіть розмір стакана</option>
+                              {CUP_SIZES.map((size) => (
+                                <option key={size} value={size}>
+                                  {size}
+                                </option>
+                              ))}
+                            </select>
 
                             <select
                               value={editForm.cupType}
