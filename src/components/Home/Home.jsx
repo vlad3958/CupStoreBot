@@ -20,6 +20,10 @@ function Home({
         📦 Продукція
       </button>
 
+      <button onClick={() => setScreen("analytics")}>
+        📊 Аналітика
+      </button>
+
       {isAdmin && (
         <button onClick={() => setScreen("admin")}>
           🛠 Адмін-панель

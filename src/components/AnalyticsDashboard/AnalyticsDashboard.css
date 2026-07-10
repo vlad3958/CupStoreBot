@@ -1,0 +1,165 @@
+.analytics-dashboard {
+  display: flex;
+  flex-direction: column;
+}
+
+.analytics-buttons {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.analytics-summary {
+  display: grid;
+  gap: 8px;
+  margin-bottom: 14px;
+}
+
+.summary-pill {
+  text-align: center;
+  padding: 10px 14px;
+  background: var(--lime);
+  border: 2px solid var(--ink);
+  border-radius: 10px;
+  font-size: 14px;
+}
+
+.chart-block {
+  border: 2px solid var(--ink);
+  border-radius: 10px;
+  padding: 12px;
+  margin-bottom: 14px;
+  background: var(--paper);
+}
+
+.chart-block h4 {
+  margin-bottom: 10px;
+  text-align: center;
+  font-family: var(--font-display);
+  font-size: 14px;
+}
+
+.chart-legend {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  margin-bottom: 10px;
+  font-size: 12px;
+  flex-wrap: wrap;
+}
+
+.dot {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 999px;
+  margin-right: 6px;
+  border: 1px solid var(--ink);
+}
+
+.dot.cups {
+  background: var(--sky);
+}
+
+.dot.earned {
+  background: var(--coral);
+}
+
+.chart-rows {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.chart-row {
+  display: grid;
+  grid-template-columns: 84px 1fr;
+  gap: 10px;
+  align-items: center;
+}
+
+.chart-date {
+  font-weight: 700;
+  font-size: 12px;
+}
+
+.chart-bars {
+  display: grid;
+  gap: 6px;
+}
+
+.bar-line {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 8px;
+  align-items: center;
+}
+
+.bar {
+  height: 10px;
+  min-width: 2px;
+  border: 1px solid var(--ink);
+  border-radius: 999px;
+}
+
+.bar.cups {
+  background: var(--sky);
+}
+
+.bar.earned {
+  background: var(--coral);
+}
+
+.bar-line span {
+  font-size: 12px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.users-analytics h3 {
+  margin: 6px 0 12px;
+  text-align: center;
+  font-size: 15px;
+}
+
+.user-chart-card {
+  border: 2px solid var(--ink);
+  border-radius: 10px;
+  padding: 10px;
+  margin-bottom: 12px;
+  background: var(--panel);
+}
+
+.user-chart-header {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 8px;
+  align-items: center;
+}
+
+.user-name {
+  font-family: var(--font-display);
+  font-size: 14px;
+}
+
+.user-stats {
+  background: var(--paper);
+  border: 2px solid var(--ink);
+  border-radius: 999px;
+  padding: 4px 8px;
+  font-size: 12px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+@media (max-width: 540px) {
+  .chart-row {
+    grid-template-columns: 70px 1fr;
+  }
+
+  .user-chart-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
