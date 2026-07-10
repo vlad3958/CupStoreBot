@@ -3,6 +3,8 @@ import { addProduction } from "../../services/api.js";
 import { dateKey } from "../../date.js";
 import "./AddProduction.css";
 
+const CUP_SIZES = ["110", "175", "185", "250", "300", "340", "400", "500"];
+
 function AddProduction({
   tg,
   setScreen,
@@ -28,8 +30,8 @@ function AddProduction({
       return;
     }
 
-    if (!cupSize.trim()) {
-      alert("Введіть розмір склянки");
+    if (!cupSize) {
+      alert("Оберіть розмір склянки");
       return;
     }
 
@@ -87,12 +89,17 @@ function AddProduction({
         onChange={(e) => setCupsCount(e.target.value)}
       />
 
-      <input
-        type="text"
-        placeholder="Розмір склянки"
+      <select
         value={cupSize}
         onChange={(e) => setCupSize(e.target.value)}
-      />
+      >
+        <option value="">Оберіть розмір склянки</option>
+        {CUP_SIZES.map((size) => (
+          <option key={size} value={size}>
+            {size}
+          </option>
+        ))}
+      </select>
 
       <select
         value={cupType}
