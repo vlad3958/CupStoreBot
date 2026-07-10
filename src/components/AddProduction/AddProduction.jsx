@@ -1,9 +1,8 @@
 import { useState } from "react";
 import { addProduction } from "../../services/api.js";
-import { dateKey } from "../../date.js";
+import { dateKey, toApiDateDdMmYyyy } from "../../date.js";
+import { CUP_SIZES } from "../../constants/cupSizes.js";
 import "./AddProduction.css";
-
-const CUP_SIZES = ["110", "175", "185", "250", "300", "340", "400", "500"];
 
 function AddProduction({
   tg,
@@ -45,8 +44,7 @@ function AddProduction({
       return;
     }
 
-    const [year, month, day] = date.split("-").map(Number);
-    const dateValue = new Date(year, month - 1, day);
+    const dateValue = toApiDateDdMmYyyy(date);
 
     try {
 
