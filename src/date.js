@@ -4,6 +4,12 @@ export function dateKey(d) {
   return `${dt.getFullYear()}-${pad(dt.getMonth() + 1)}-${pad(dt.getDate())}`;
 }
 
+export function formatDateDdMmYyyy(d) {
+  const dt = new Date(d);
+  const pad = (n) => String(n).padStart(2, "0");
+  return `${pad(dt.getDate())}/${pad(dt.getMonth() + 1)}/${dt.getFullYear()}`;
+}
+
 export function buildMonthGrid(monthDate) {
   const year = monthDate.getFullYear();
   const month = monthDate.getMonth();
