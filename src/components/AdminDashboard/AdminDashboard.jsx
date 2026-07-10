@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { getAdminOverview } from "../../services/api.js";
 import { calcEarned, cupLabel, formatMoney } from "../../pricing.js";
+import { formatDateDdMmYyyy } from "../../date.js";
 import "./AdminDashboard.css";
 
 function workerName(user) {
@@ -44,8 +45,18 @@ function AdminDashboard({ tg, setScreen, showError, setLoading }) {
   }, [users]);
 
   const byWorker = useMemo(() => {
+    const now = new Date();
+    const currentYear = now.getFullYear();
+    const currentMonth = now.getMonth();
     const map = {};
     for (const item of productions) {
+      const itemDate = new Date(item.date);
+      if (
+        itemDate.getFullYear() !== currentYear ||
+        itemDate.getMonth() !== currentMonth
+      ) {
+        continue;
+      }
       const id = item.telegramId;
       if (!map[id]) map[id] = { items: [], earned: 0, cups: 0 };
       map[id].items.push(item);
@@ -79,7 +90,7 @@ function AdminDashboard({ tg, setScreen, showError, setLoading }) {
       ) : (
         <>
           <p className="total-earned">
-            <b>Всього по всіх працівниках:</b> {formatMoney(totalEarnedAll)}
+            <b>Всього по всіх працівниках за місяць:</b> {formatMoney(totalEarnedAll)}
           </p>
 
           {workerIds.map((id) => {
@@ -106,7 +117,7 @@ function AdminDashboard({ tg, setScreen, showError, setLoading }) {
                       .sort((a, b) => new Date(b.date) - new Date(a.date))
                       .map((item) => (
                         <div className="production-card" key={item._id}>
-                          <p><b>Дата:</b> {new Date(item.date).toLocaleDateString("uk-UA")}</p>
+                          <p><b>Дата:</b> {formatDateDdMmYyyy(item.date)}</p>
                           <p><b>Кількість:</b> {item.cupsCount}</p>
                           <p><b>Розмір:</b> {item.cupSize}</p>
                           <p><b>Тип:</b> {cupLabel(item)}</p>

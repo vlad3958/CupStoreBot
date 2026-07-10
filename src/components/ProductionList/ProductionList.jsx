@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { getProductions, updateProduction, deleteProduction } from "../../services/api.js";
 import { calcEarned, cupLabel, formatMoney } from "../../pricing.js";
-import { dateKey, buildMonthGrid } from "../../date.js";
+import { dateKey, buildMonthGrid, formatDateDdMmYyyy } from "../../date.js";
 import "./ProductionList.css";
 
 const WEEKDAYS = ["Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Нд"];
@@ -61,8 +61,6 @@ function ProductionList({
     return map;
   }, [productions]);
 
-  const totalEarned = productions.reduce((sum, item) => sum + calcEarned(item), 0);
-
   const monthCells = useMemo(() => buildMonthGrid(currentMonth), [currentMonth]);
 
   const monthEarned = monthCells.reduce((sum, day) => {
@@ -110,17 +108,17 @@ function ProductionList({
     if (!tg) return;
 
     if (!editForm.cupsCount || Number(editForm.cupsCount) <= 0) {
-      alert("Введіть кількість склянок");
+      alert("Введіть кількість стаканів");
       return;
     }
 
     if (!editForm.cupSize.trim()) {
-      alert("Введіть розмір склянки");
+      alert("Введіть розмір стакана");
       return;
     }
 
     if (!editForm.cupType) {
-      alert("Оберіть тип склянки");
+      alert("Оберіть тип стакана");
       return;
     }
 
@@ -196,10 +194,6 @@ function ProductionList({
         </p>
       ) : (
         <>
-          <p className="total-earned">
-            <b>Всього зароблено:</b> {formatMoney(totalEarned)}
-          </p>
-
           <div className="calendar">
             <div className="calendar-nav">
               <button className="nav-btn" onClick={goPrevMonth}>‹</button>
@@ -251,10 +245,7 @@ function ProductionList({
               <>
                 <div className="day-details-header">
                   <span>
-                    {selectedDateObj.toLocaleDateString("uk-UA", {
-                      day: "numeric",
-                      month: "long",
-                    })}
+                    {formatDateDdMmYyyy(selectedDateObj)}
                   </span>
                   <button className="today-btn" onClick={goToday}>Сьогодні</button>
                 </div>
@@ -269,7 +260,7 @@ function ProductionList({
                           <>
                             <input
                               type="number"
-                              placeholder="Кількість склянок"
+                              placeholder="Кількість стаканів"
                               value={editForm.cupsCount}
                               onChange={(e) =>
                                 setEditForm({ ...editForm, cupsCount: e.target.value })
@@ -278,7 +269,7 @@ function ProductionList({
 
                             <input
                               type="text"
-                              placeholder="Розмір склянки"
+                              placeholder="Розмір стакана"
                               value={editForm.cupSize}
                               onChange={(e) =>
                                 setEditForm({ ...editForm, cupSize: e.target.value })
@@ -291,7 +282,7 @@ function ProductionList({
                                 setEditForm({ ...editForm, cupType: e.target.value })
                               }
                             >
-                              <option value="">Оберіть тип склянки</option>
+                              <option value="">Оберіть тип стакана</option>
                               <option value="single">Одношаровий</option>
                               <option value="double">Двошаровий</option>
                             </select>

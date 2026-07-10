@@ -1,6 +1,6 @@
 export const PRICES = {
-  single: 5,  // копійок за одношарову склянку
-  double: 10, // копійок за двошарову склянку
+  single: 5,  // копійок за одношаровий стакан
+  double: 10, // копійок за двошаровий стакан
 };
 
 export function calcEarned(item) {

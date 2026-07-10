@@ -26,17 +26,17 @@ function AddProduction({
     }
 
     if (!cupsCount || Number(cupsCount) <= 0) {
-      alert("Введіть кількість склянок");
+      alert("Введіть кількість стаканів");
       return;
     }
 
     if (!cupSize) {
-      alert("Оберіть розмір склянки");
+      alert("Оберіть розмір стакана");
       return;
     }
 
     if (!cupType) {
-      alert("Оберіть тип склянки");
+      alert("Оберіть тип стакана");
       return;
     }
 
@@ -84,7 +84,7 @@ function AddProduction({
 
       <input
         type="number"
-        placeholder="Кількість склянок"
+        placeholder="Кількість стаканів"
         value={cupsCount}
         onChange={(e) => setCupsCount(e.target.value)}
       />
@@ -93,7 +93,7 @@ function AddProduction({
         value={cupSize}
         onChange={(e) => setCupSize(e.target.value)}
       >
-        <option value="">Оберіть розмір склянки</option>
+        <option value="">Оберіть розмір стакана</option>
         {CUP_SIZES.map((size) => (
           <option key={size} value={size}>
             {size}
@@ -105,7 +105,7 @@ function AddProduction({
         value={cupType}
         onChange={(e) => setCupType(e.target.value)}
       >
-        <option value="">Оберіть тип склянки</option>
+        <option value="">Оберіть тип стакана</option>
         <option value="single">Одношаровий</option>
         <option value="double">Двошаровий</option>
       </select>
